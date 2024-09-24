@@ -1,2 +1,3 @@
-package PACKAGE_NAME;public interface Mortal {
+public interface Mortal {
+    boolean isAlive();
 }
