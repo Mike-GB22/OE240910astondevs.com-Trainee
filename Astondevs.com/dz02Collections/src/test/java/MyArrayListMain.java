@@ -3,7 +3,7 @@ import java.util.List;
 
 public class MyArrayListMain {
     public static void main(String[] args) {
-        System.out.println("¬ставка в центр списка еще одного списка: add(index, element), addAll(index, Collection extends E");
+        System.out.println("¬ставка в центр списка еще одного списка: addByIndex(index, element), addAllByIndex(index, Collection extends E");
         Integer[] array1 = new Integer[]{1, 2, 3, 4, 5, 6, 7, 8};
         Integer[] array2 = new Integer[]{100, 200, 300, 400, 500, 600, 700, 800};
         List<Integer> list1 = List.of(array1);
