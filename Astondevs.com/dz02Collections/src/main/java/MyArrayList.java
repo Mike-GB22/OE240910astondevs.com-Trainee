@@ -43,12 +43,12 @@ public class MyArrayList <E> implements Collection<E>, List<E> {
         return -1;
     }
 
-    @Override //May TODO
+    @Override //May TODO MyArrayLink listIterator
     public ListIterator<E> listIterator() {
         return null;
     }
 
-    @Override //May TODO
+    @Override //May TODO MyArrayLink listIterator
     public ListIterator<E> listIterator(int index) {
         return null;
     }
@@ -58,10 +58,10 @@ public class MyArrayList <E> implements Collection<E>, List<E> {
         checkToBoundsException(fromIndex);
         checkToBoundsExceptionForInsert(toIndex);
         List<E> newList = new MyArrayList<>();
-        for(int index = fromIndex; fromIndex < toIndex; index++){
+        for(int index = fromIndex; index < toIndex; index++){
             newList.add((E) listArray[index]);
         }
-        return null;
+        return newList;
     }
 
     @Override
@@ -168,7 +168,7 @@ public class MyArrayList <E> implements Collection<E>, List<E> {
         for (Object element: c) {
             while (remove(element)){
                 flag = true;
-            };
+            }
         }
         return flag;
     }
@@ -230,7 +230,8 @@ public class MyArrayList <E> implements Collection<E>, List<E> {
 
     //ѕровер€ем нужно ли рашир€ть хранилище
     boolean isNeedToExpand(){
-        if((double) size/listArray.length > COEFFICIENT) return true;
+        double arrayIsFullPercent = (double) size/listArray.length;
+        if(arrayIsFullPercent > COEFFICIENT) return true;
         return false;
     }
 
@@ -247,7 +248,7 @@ public class MyArrayList <E> implements Collection<E>, List<E> {
         return listArray.length;
     }
 
-    private class MyIterator <E> implements Iterator<E>{
+    private class MyIterator<E> implements Iterator<E>{
         private int indexOfIterator = 0;
 
         @Override
