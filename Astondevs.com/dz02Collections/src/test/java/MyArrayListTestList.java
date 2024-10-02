@@ -79,16 +79,16 @@ public class MyArrayListTestList  {
         assertEquals(7, myList.lastIndexOf(LIST_TO_TEST.get(7)));
         assertEquals(9, myList.lastIndexOf(LIST_TO_TEST.get(9)));
         assertEquals(11, myList.lastIndexOf(LIST_TO_TEST.get(11)));
-        assertEquals(15, myList.lastIndexOf(LIST_TO_TEST.get(15)));
+        assertEquals(14, myList.lastIndexOf(LIST_TO_TEST.get(14)));
         myList.add(LIST_TO_TEST.get(7));
-        assertEquals(myList.size(), myList.lastIndexOf(LIST_TO_TEST.get(7)));
+        assertEquals(myList.size() - 1, myList.lastIndexOf(LIST_TO_TEST.get(7)));
     }
 
-    @Test
+    @Test //TODO
     void listIterator() {
     }
 
-    @Test
+    @Test //TODO MyArrayListTest listIterator
     void listIteratorByIndex() {
         //listIterator(int index) {
     }
@@ -98,7 +98,7 @@ public class MyArrayListTestList  {
         //subList(int fromIndex, int toIndex) {
         myList.addAll(LIST_TO_TEST);
         MyArrayList<Integer> subList = (MyArrayList<Integer>) myList.subList(5, myList.size());
-        assertEquals(LIST_TO_TEST.size() - 5, myList.size());
+        assertEquals(LIST_TO_TEST.size() - 5, subList.size());
 
         assertEquals(ARRAY_TO_TEST[0+5], subList.get(0));
         assertEquals(ARRAY_TO_TEST[2+5], subList.get(2));
