@@ -1,7 +1,7 @@
 import java.util.*;
 
 //2024.10.01 zip
-public class MyLinkedList <E> implements Collection<E> {
+public class MyLinkedList <E> implements Collection<E>, List<E> {
     private Node<E> head;
     private Node<E> tail;
     private int size;
@@ -18,6 +18,7 @@ public class MyLinkedList <E> implements Collection<E> {
         this.addAll(c);
     }
 
+    /** Interface: Collection **/
     @Override
     public int size() {
         return size;
@@ -25,8 +26,7 @@ public class MyLinkedList <E> implements Collection<E> {
 
     @Override
     public boolean isEmpty() {
-        if(size == 0) return true;
-        return false;
+        return size == 0;
     }
 
     @Override
@@ -38,15 +38,14 @@ public class MyLinkedList <E> implements Collection<E> {
     }
 
     @Override
-    public Iterator<E> iterator() {
+    public MyIterator<E> iterator() {
         return new MyIterator<E>();
     }
 
     @Override
     public boolean add(E o) {
-        Node<E> node = new Node((E) o);
+        Node<E> node = new Node<>((E) o);
         insertNodeAfterNode(node, tail.getPrevious());
-        size++;
         return true;
     }
 
@@ -58,7 +57,6 @@ public class MyLinkedList <E> implements Collection<E> {
             Object value = node.getValue();
             if(Objects.equals(value, o)) {
                 this.withdrawNode(node);
-                size--;
                 return true;
             }
         }
@@ -72,6 +70,11 @@ public class MyLinkedList <E> implements Collection<E> {
             this.add(element);
         }
         return true;
+    }
+
+    @Override
+    public boolean addAll(int index, Collection<? extends E> c) {
+        return false;
     }
 
     @Override
@@ -140,8 +143,82 @@ public class MyLinkedList <E> implements Collection<E> {
         return Arrays.toString(this.toArray());
     }
 
+    /** interface: List **/
+    @Override
+    public E get(int index) {
+        Node<E> node = getNodeByIndex(index);
+        return node.getValue();
+    }
+
+    @Override
+    public E set(int index, E element) {
+        Node<E> node = getNodeByIndex(index);
+        node.setValue(element);
+        return node.getValue();
+    }
+
+    @Override
+    public void add(int index, E element) {
+        Node<E> node = null;
+        if(index == size) node = tail;
+        else node = getNodeByIndex(index);
+        insertNodeAfterNode(new Node<>(element), node.getPrevious());
+    }
+
+    @Override
+    public E remove(int index) {
+        Node<E> node = getNodeByIndex(index);
+        withdrawNode(node);
+        return node.getValue();
+    }
+
+    @Override
+    public int indexOf(Object o) {
+        MyIterator<E> myIterator = iterator();
+        while (myIterator.hasNext()){
+            if(Objects.equals(myIterator.next(), o)) return myIterator.getIndex();
+        }
+        return -1;
+    }
+
+    @Override
+    public int lastIndexOf(Object o) {
+        int indexOfLastObject = -1;
+        MyIterator<E> myIterator = iterator();
+        while (myIterator.hasNext()){
+            if(Objects.equals(myIterator.next(), o)) indexOfLastObject = myIterator.getIndex();
+        }
+        return indexOfLastObject;
+    }
+
+    @Override //TODO listIterator
+    public ListIterator<E> listIterator() {
+        return null;
+    }
+
+    @Override //TODO listIterator
+    public ListIterator<E> listIterator(int index) {
+        return null;
+    }
+
+    @Override
+    public List<E> subList(int fromIndex, int toIndex) {
+        checkIndex(fromIndex);
+        checkIndex(toIndex - 1);
+
+        List<E> subList = new MyLinkedList<>();
+        MyIterator<E> myIterator = iterator();
+        while (myIterator.hasNext()){
+            E value = myIterator.next();
+            int index = myIterator.getIndex();
+            if(index >= fromIndex) subList.add(value);
+            if(index >= toIndex - 1) break;
+        }
+        return subList;
+    }
 
     /***********************/
+    /** Node **/
     private static class Node<E>{
         E value;
         private Node<E> previous;
@@ -179,11 +256,12 @@ public class MyLinkedList <E> implements Collection<E> {
         }
         @Override
         public String toString(){
-            return String.format("Node: %s", this);
+            return String.format("Node: %s", this.getValue());
         }
     }
 
     /***********************/
+    /** Service **/
     //Извлечение ноды из цепочки, возвращем предыдущую ноду
     private Node<E> withdrawNode(Node<E> node){
         Node<E> originalPrevious = node.getPrevious();
@@ -193,6 +271,7 @@ public class MyLinkedList <E> implements Collection<E> {
         originalNext.setPrevious(originalPrevious);
 
         node.setPrevious(null).setNext(null);
+        size--;
         return originalPrevious;
     }
     //Вставка ноды после ноды, возвращаем всталвенную ноду
@@ -200,6 +279,7 @@ public class MyLinkedList <E> implements Collection<E> {
         what.setNext(afterNode.getNext()).setPrevious(afterNode);
         what.getNext().setPrevious(what);
         afterNode.setNext(what);
+        size++;
         return what;
     }
 
@@ -211,7 +291,21 @@ public class MyLinkedList <E> implements Collection<E> {
         this.insertNodeAfterNode(node1, whereWasNode2);
     }
 
+    private Node<E> getNodeByIndex(int index){
+        checkIndex(index);
+        MyIterator<E> myIterator = this.iterator();
+        while (myIterator.hasNext()){
+            Node<E> node = myIterator.nextNode();
+            if(myIterator.getIndex() == index) return node;
+        }
+        throw new IllegalStateException();
+    }
+
+    private void checkIndex(int index){
+        if(index < 0 || index >= size) throw new IndexOutOfBoundsException();
+    }
     /***********************/
+    /** Iterator **/
     private class MyIterator<E> implements Iterator<E>{
         Node currentElement = head;
         int index = -1;
@@ -241,15 +335,18 @@ public class MyLinkedList <E> implements Collection<E> {
         }
         public void remove(){
             checkIndex(new IllegalStateException());
-            size--;
-            index--;
             Node elementToDelete = currentElement;
             currentElement = currentElement.getPrevious();
             withdrawNode(elementToDelete);
+            index--;
         }
 
         private void checkIndex(RuntimeException e){
             if(index < 0 || index >= size) throw e;
+        }
+
+        public int getIndex(){
+            return index;
         }
     }
 }
