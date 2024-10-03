@@ -1,10 +1,13 @@
 //2024.10.02 zip
+import org.junit.jupiter.api.Test;
+
 import java.time.LocalDateTime;
 import java.util.*;
 
 public class MyLinkedListMain {
     public static void main(String[] args) {
         MyLinkedList<Integer> list = new MyLinkedList<>();
+        System.out.println("\n   /** Interface: Collection **/");
         list.add(Integer.valueOf(1));
         list.add(Integer.valueOf(2));
         list.add(Integer.valueOf(3));
@@ -50,6 +53,38 @@ public class MyLinkedListMain {
         list.retainAll(listToRetain);
         System.out.println("list.retainAll(listToRetain): " + list);
 
+        System.out.println("\n    /** interface: List **/\n");
+        System.out.println("list.add(1, 50); list.add(1, 40); list.add(1, 30); list.add(0, 10); list.add(0, 0);");
+        list.add(1, 50);
+        list.add(1, 40);
+        list.add(1, 30);
+        list.add(0, 10);
+        list.add(0, 0);
+        System.out.println("list: " + list + ", size: " + list.size());
 
+        System.out.printf("%nlist.get(1): %d, list.get(2): %d, list.get(3): %d%n"
+                , list.get(1), list.get(2), list.get(3));
+        System.out.println("list.set(1, 1000), list.set(2, 2000), list.set(3, 3000)");
+        list.set(1, 1000); list.set(2, 2000); list.set(3, 3000);
+        System.out.println("list: " + list + ", size: " + list.size());
+
+
+
+        System.out.println("\nlist.remove(4)x5; list.remove(0);");
+        for(int i = 0; i < 5; i++) list.remove(4);
+        list.remove(0);
+        System.out.println("list: " + list + ", size: " + list.size());
+
+        list.add(1,99);
+        list.add(3,99);
+        list.add(5,99);
+        list.add(6,999);
+        System.out.println("list: " + list + ", size: " + list.size());
+
+        System.out.printf("list.indexOf(99): %d, list.lastIndexOf(99): %d%n",list.indexOf(99), list.lastIndexOf(99));
+
+        System.out.printf("%nlist.subList(0,2): %s, list.subList(2,5): %s, list.subList(5,7): %s%n", list.subList(0,2)
+                , list.subList(2,5)
+                , list.subList(5,7));
     }
 }
