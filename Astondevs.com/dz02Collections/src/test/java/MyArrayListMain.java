@@ -9,7 +9,10 @@ public class MyArrayListMain {
         List<Integer> list1 = List.of(array1);
         List<Integer> list2 = List.of(array2);
 
+
+        System.out.println("- addAll(index, collection) -");
         List<Integer> list = new MyArrayList<>(list1);
+
         System.out.println(list);
         list.add(5, Integer.valueOf(1000));
         System.out.println(list);
@@ -17,7 +20,7 @@ public class MyArrayListMain {
         list.addAll(5, list2);
         System.out.println(list);
 
-        System.out.println();
+        System.out.println("-");
         list = new MyArrayList<>();
         list.addAll(0, list1);
         System.out.println(list);
@@ -25,12 +28,17 @@ public class MyArrayListMain {
         System.out.println(list);
 
         //
-        System.out.println();
+        System.out.println("- get() -");
         list.set(0, 1001);
         list.set(1, 1002);
         list.set(2, 1003);
         System.out.printf("get 0: %d, 1: %d, 2: %d%n", list.get(0), list.get(1), list.get(2));
         System.out.println(list);
+
+        //
+        System.out.println("- sublist() -");
+        MyArrayList<Integer> sub = (MyArrayList<Integer>) list.subList(3,7);
+        System.out.println(sub);
 
     }
 }
