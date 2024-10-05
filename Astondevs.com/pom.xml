@@ -11,6 +11,7 @@
     <modules>
         <module>dz01</module>
         <module>dz02Collections</module>
+        <module>dz03Steam</module>
     </modules>
 
     <properties>
