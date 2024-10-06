@@ -12,6 +12,7 @@
         <module>dz01</module>
         <module>dz02Collections</module>
         <module>dz03Steam</module>
+        <module>dz04Lombok</module>
     </modules>
 
     <properties>
