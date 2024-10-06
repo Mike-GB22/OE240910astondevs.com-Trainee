@@ -65,7 +65,7 @@ public class MyLinkedList <E> implements Collection<E>, List<E> {
 
     @Override
     public boolean addAll(Collection<? extends E> c) {
-        if(c.size() < 1) return false;
+        if(c.isEmpty()) return false;
         for(E element : c){
             this.add(element);
         }
@@ -80,19 +80,14 @@ public class MyLinkedList <E> implements Collection<E>, List<E> {
     @Override
     public void clear() {
         size = 0;
-        head = new Node<E>(null);
-        tail = new Node<E>(null).setPrevious(head);
+        tail.setPrevious(head);
         head.setNext(tail);
     }
 
     @Override
     public boolean retainAll(Collection c) {
         int sizeBegin = size;
-        Iterator<E> myIterator = this.iterator();
-        while (myIterator.hasNext()){
-            if(!c.contains(myIterator.next()))
-                myIterator.remove();
-        }
+        this.removeIf(element -> !c.contains(element));
         return sizeBegin != size;
     }
 
