@@ -112,7 +112,7 @@ public class MyArrayList <E> implements Collection<E>, List<E> {
         return (E) objectToReturn;
     }
 
-    @Override
+    @Override //TODO remove(null);
     public boolean remove(Object o) {
         int index = indexOf(o);
         if(index < 0) return false;
