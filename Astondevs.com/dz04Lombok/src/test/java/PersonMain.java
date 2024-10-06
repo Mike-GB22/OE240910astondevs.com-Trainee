@@ -21,14 +21,15 @@ public class PersonMain {
                 .isAMan(false)
                 .build();
 
-        List<Person> personsList = new ArrayList<>();
+        List<Person> personsList = new MyArrayList<>();
         personsList.add(ivan);
         personsList.add(petr);
         personsList.add(alex);
 
         for(Person person : personsList){
-            System.out.println(person);
-            System.out.println("Age: " + person.getAge() + ", isAdult: " + person.isAdult());
+            System.out.println(person.getName() + ", age: " + person.getAge() + ": isAdult: " + person.isAdult());
+            System.out.println("Full info: " + person + "\n");
+
         }
     }
 }
