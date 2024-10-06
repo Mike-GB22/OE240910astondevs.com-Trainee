@@ -24,13 +24,12 @@ public class MyArrayList <E> implements Collection<E>, List<E> {
 
     @Override
     public boolean isEmpty() {
-        if (size < 1) return true;
-        return false;
+        return size < 1;
     }
 
     public int indexOf(Object o){
         for(int count = 0; count < size; count++){
-            if(listArray[count].equals(o)) return count;
+            if(Objects.equals(listArray[count], o)) return count;
         }
         return -1;
     }
@@ -38,7 +37,7 @@ public class MyArrayList <E> implements Collection<E>, List<E> {
     @Override
     public int lastIndexOf(Object o) {
         for(int index = size - 1; index >= 0; index--){
-            if(listArray[index].equals(o)) return index;
+            if(Objects.equals(listArray[index], o)) return index;
         }
         return -1;
     }
@@ -66,8 +65,7 @@ public class MyArrayList <E> implements Collection<E>, List<E> {
 
     @Override
     public boolean contains(Object o) {
-        if(indexOf(o)>=0) return true;
-        return false;
+        return indexOf(o) >= 0;
     }
 
     @Override
@@ -110,6 +108,7 @@ public class MyArrayList <E> implements Collection<E>, List<E> {
             listArray[index] = listArray[index + 1];
         }
         size--;
+        listArray[size] = null;
         return (E) objectToReturn;
     }
 
@@ -196,6 +195,9 @@ public class MyArrayList <E> implements Collection<E>, List<E> {
 
     @Override
     public void clear() {
+        for(int index = 0; index < size; index++){
+            listArray[index] = null;
+        }
         size = 0;
     }
 
@@ -260,6 +262,8 @@ public class MyArrayList <E> implements Collection<E>, List<E> {
         public E next() {
             return (E) listArray[indexOfIterator++];
         }
+
+        //TODO Iterator.remove()
     }
 
     @Override
