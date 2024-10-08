@@ -1,3 +1,7 @@
+import Units.Hero;
+import Units.Mage;
+import Units.Warrior;
+
 public class BattleGround {
     Hero opponent1;
     Hero opponent2;
@@ -26,8 +30,8 @@ public class BattleGround {
 
     private void printEndMsg() {
         System.out.println("---------------------");
-        System.out.printf("%s %s is the winner. Rest health is %d %n"
-                , winner.typ, winner.name, winner.health);
+//        System.out.printf("%s %s is the winner. Rest health is %d %n"
+//                , winner.typ, winner.name, winner.health);
         System.out.println("---------------------");
     }
 

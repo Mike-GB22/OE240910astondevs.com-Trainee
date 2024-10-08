@@ -1,3 +1,5 @@
+package Units;
+
 public class Enemy implements Mortal{
     int health;
     String name = "ErrorName";

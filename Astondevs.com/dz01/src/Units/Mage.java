@@ -1,14 +1,23 @@
+package Units;
+
+import Units.Weapons.MagicWands.Wand;
+import Units.Weapons.Swords.Sword;
+import Units.Weapons.Weapon;
+
 import java.util.Random;
 
 public class Mage  extends Hero{
 
+    public Mage(String name, Weapon weapon){
+        super(HeroesTypes.Mage, name, weapon);
+    }
+
     public Mage(String name){
-        super(name);
-        this.typ = "Mage";
+        this(name, new Wand());
     }
     @Override
     public void attackEnemy(){
-        System.out.printf("Alert: Mage %s is attacking%n", name);
+        System.out.printf("Alert: Units.Mage %s is attacking%n", name);
     }
 
     @Override
