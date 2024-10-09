@@ -1,6 +1,8 @@
 import Units.Hero;
 import Units.Mage;
 import Units.Warrior;
+import Units.Weapons.MagicWands.Wand;
+import Units.Weapons.Swords.Sword;
 
 public class BattleGround {
     Hero opponent1;
@@ -23,16 +25,16 @@ public class BattleGround {
     }
 
     private void printStartMsg() {
-        System.out.println("---------------------");
-        System.out.printf("Battle: %s VS %s %n", opponent1, opponent2);
-        System.out.println("---------------------");
+        TrainingGround.printSplitter();
+        System.out.printf("Battle: %s VS %s %n", opponent1.getName(), opponent2.getName());
+        TrainingGround.printSplitter();
     }
 
     private void printEndMsg() {
-        System.out.println("---------------------");
-//        System.out.printf("%s %s is the winner. Rest health is %d %n"
-//                , winner.typ, winner.name, winner.health);
-        System.out.println("---------------------");
+        TrainingGround.printSplitter();
+        System.out.printf("%s %s is the winner. Rest health is %.0f %n"
+                , winner.getTypeOfHero(), winner.getName(), winner.getHealth());
+        TrainingGround.printSplitter();
     }
 
     public void start() {
@@ -42,10 +44,18 @@ public class BattleGround {
     }
 
     public static void main(String[] args) {
+        System.out.println("Battle 1. Default weapons!");
         BattleGround battle1 = new BattleGround(
                 new Warrior("Adam")
                 , new Mage("Merlin"));
 
         battle1.start();
+
+        System.out.println("Battle 2. Change weapons!");
+        BattleGround battle2 = new BattleGround(
+                new Warrior("Adam", new Wand())
+                , new Mage("Merlin", new Sword()));
+
+        battle2.start();
     }
 }
