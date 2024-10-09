@@ -1,37 +1,43 @@
 package Units;
 
 public class Enemy implements Mortal{
-    int health;
-    String name = "ErrorName";
+    double health;
+    String name = "Anonymous";
 
-    public Enemy(String name, int health){
+    public Enemy(String name, double health){
         this.name = name;
         this.health = health;
     }
     public Enemy(String name){
         this(name, 100);
     }
-    public Enemy(int health){
+    public Enemy(double health){
         this("WithOutName", health);
     }
 
-    public void setHealth(int health){
+    public void setHealth(double health){
         this.health = health;
     }
 
-    public int getHealth() {
+    public double getHealth() {
         return health;
     }
 
-    public int takeDamage(int damage){
+    public double takeDamage(double damage){
         if(!isAlive()){
             System.out.printf("Alert: %s is already! dead%n", name);
             return health;
         }
+        damage = this.dodgeAnAttack(damage);
         health -= damage;
-        System.out.printf("Alert: %s is damaged %d, rest %d%n", name, damage, health);
+        System.out.printf("Alert: %s is damaged %.2f, rest %.0f%n", name, damage, health);
         if(!isAlive()) System.out.printf("Alert: %s is dead%n", name);
+        System.out.println("");
         return health;
+    }
+
+    public double dodgeAnAttack(double damage){
+        return damage;
     }
 
     @Override

@@ -8,86 +8,124 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum HeroesTypes {
-    Ghost("Ghost")
-    , Archer("Archer")
-    , Mage("Mage")
-    , Warrior("Warrior");
+    GHOST("Ghost" )
+    , ARCHER("Archer")
+    , MAGE("Mage")
+    , WARRIOR("Warrior");
 
-    private Map<AbilitiesTypes, Integer> defaultAbilities = new HashMap<>();
+
+    private final Map<AbilitiesTypes, Integer> defaultAbilities = new HashMap<>();
+    private final Map<WeaponsTypes, Double> defaultLevelOfWeaponProficiency = new HashMap<>();
+    private final Map<WeaponsTypes, Integer> defaultAptitudeForLearningWeapon = new HashMap<>();
     private final String typeOfHero;
 
-    private HeroesTypes(String name){
+    static {
+        for(HeroesTypes type: HeroesTypes.values()){
+            setDefaultAbilities(type);
+            setDefaultLevelOfWeaponProficiency(type);
+            setDefaultAptitudeForLearningWeapon(type);
+        }
+    }
+
+    HeroesTypes(String name){
         this.typeOfHero = name;
-        setDefaultAbilities();
     }
 
     public String getTypeOfHero(){
         return typeOfHero;
     }
 
-    public Map<AbilitiesTypes, Integer> defaultAbilities(){
+    public Map<WeaponsTypes, Double> getDefaultLevelOfWeaponProficiency() {
+        return defaultLevelOfWeaponProficiency;
+    }
+
+    public Map<WeaponsTypes, Integer> getDefaultAptitudeForLearningWeapon() {
+        return defaultAptitudeForLearningWeapon;
+    }
+
+    public Map<AbilitiesTypes, Integer> getDefaultAbilities(){
         return defaultAbilities;
     }
-    private void setDefaultAbilities(){
-        this.defaultAbilities.put(AbilitiesTypes.LEVEL, AbilitiesTypes.LEVEL.getDefaultValue());
-        this.defaultAbilities.put(AbilitiesTypes.STRENGTH, AbilitiesTypes.STRENGTH.getDefaultValue());
-        this.defaultAbilities.put(AbilitiesTypes.DEXTERITY, AbilitiesTypes.DEXTERITY.getDefaultValue());
-        this.defaultAbilities.put(AbilitiesTypes.EVASION, AbilitiesTypes.EVASION.getDefaultValue());
-        this.defaultAbilities.put(AbilitiesTypes.MAGIC, AbilitiesTypes.MAGIC.getDefaultValue());
-        switch (this){
-            case Warrior -> {
-                this.defaultAbilities.put(AbilitiesTypes.STRENGTH, 100);
-                break;
-            }
-            case Archer -> {
-                this.defaultAbilities.put(AbilitiesTypes.EVASION, 100);
-                break;
-            }
-            case Mage -> {
-                this.defaultAbilities.put(AbilitiesTypes.MAGIC, 100);
-                break;
-            }
-            case Ghost -> {
-                break;
-            }
+    private static void setDefaultAbilities(HeroesTypes type){
+        type.defaultAbilities.put(AbilitiesTypes.LEVEL, AbilitiesTypes.LEVEL.getDefaultValue());
+        type.defaultAbilities.put(AbilitiesTypes.STRENGTH, AbilitiesTypes.STRENGTH.getDefaultValue());
+        type.defaultAbilities.put(AbilitiesTypes.DEXTERITY, AbilitiesTypes.DEXTERITY.getDefaultValue());
+        type.defaultAbilities.put(AbilitiesTypes.EVASION, AbilitiesTypes.EVASION.getDefaultValue());
+        type.defaultAbilities.put(AbilitiesTypes.MAGIC, AbilitiesTypes.MAGIC.getDefaultValue());
+        switch (type) {
+            case WARRIOR -> type.defaultAbilities.put(AbilitiesTypes.STRENGTH, 100);
+            case ARCHER -> type.defaultAbilities.put(AbilitiesTypes.EVASION, 100);
+            case MAGE -> type.defaultAbilities.put(AbilitiesTypes.MAGIC, 100);
+            case GHOST -> type.defaultAbilities.put(AbilitiesTypes.MAGIC, 500);
             default -> {
             }
         }
     }
-
-
-//    private void setDefaultAbilities(){
-//        switch (this){
-//            case Warrior -> {
-//                this.defaultAbilities.put(WeaponsTypes.magicalWeapon, 30);
-//                this.defaultAbilities.put(WeaponsTypes.meleeWeapon, 100);
-//                this.defaultAbilities.put(WeaponsTypes.rangedWeapon, 60);
-//                break;
-//            }
-//            case Archer -> {
-//                this.defaultAbilities.put(WeaponsTypes.magicalWeapon, 30);
-//                this.defaultAbilities.put(WeaponsTypes.meleeWeapon, 60);
-//                this.defaultAbilities.put(WeaponsTypes.rangedWeapon, 100);
-//                break;
-//            }
-//            case Mage -> {
-//                this.defaultAbilities.put(WeaponsTypes.magicalWeapon, 100);
-//                this.defaultAbilities.put(WeaponsTypes.meleeWeapon, 60);
-//                this.defaultAbilities.put(WeaponsTypes.rangedWeapon, 30);
-//                break;
-//            }
-//            case Ghost -> {
-//                this.defaultAbilities.put(WeaponsTypes.magicalWeapon, 500);
-//                this.defaultAbilities.put(WeaponsTypes.meleeWeapon, 0);
-//                this.defaultAbilities.put(WeaponsTypes.rangedWeapon, 0);
-//                break;
-//            }
-//            default -> {
-//                this.defaultAbilities.put(WeaponsTypes.magicalWeapon, 10);
-//                this.defaultAbilities.put(WeaponsTypes.meleeWeapon, 10);
-//                this.defaultAbilities.put(WeaponsTypes.rangedWeapon, 10);
-//            }
-//        }
-//    }
+    private static void setDefaultLevelOfWeaponProficiency(HeroesTypes type){
+        switch (type){
+            case WARRIOR -> {
+                type.defaultLevelOfWeaponProficiency.put(WeaponsTypes.MAGICAL_WEAPON, 30d);
+                type.defaultLevelOfWeaponProficiency.put(WeaponsTypes.MELEE_WEAPON, 100d);
+                type.defaultLevelOfWeaponProficiency.put(WeaponsTypes.RANGED_WEAPON, 60d);
+                break;
+            }
+            case ARCHER -> {
+                type.defaultLevelOfWeaponProficiency.put(WeaponsTypes.MAGICAL_WEAPON, 30d);
+                type.defaultLevelOfWeaponProficiency.put(WeaponsTypes.MELEE_WEAPON, 60d);
+                type.defaultLevelOfWeaponProficiency.put(WeaponsTypes.RANGED_WEAPON, 100d);
+                break;
+            }
+            case MAGE -> {
+                type.defaultLevelOfWeaponProficiency.put(WeaponsTypes.MAGICAL_WEAPON, 100d);
+                type.defaultLevelOfWeaponProficiency.put(WeaponsTypes.MELEE_WEAPON, 60d);
+                type.defaultLevelOfWeaponProficiency.put(WeaponsTypes.RANGED_WEAPON, 30d);
+                break;
+            }
+            case GHOST -> {
+                type.defaultLevelOfWeaponProficiency.put(WeaponsTypes.MAGICAL_WEAPON, 500d);
+                type.defaultLevelOfWeaponProficiency.put(WeaponsTypes.MELEE_WEAPON, 0d);
+                type.defaultLevelOfWeaponProficiency.put(WeaponsTypes.RANGED_WEAPON, 0d);
+                break;
+            }
+            default -> {
+                type.defaultLevelOfWeaponProficiency.put(WeaponsTypes.MAGICAL_WEAPON, 10d);
+                type.defaultLevelOfWeaponProficiency.put(WeaponsTypes.MELEE_WEAPON, 10d);
+                type.defaultLevelOfWeaponProficiency.put(WeaponsTypes.RANGED_WEAPON, 10d);
+            }
+        }
+    }
+    private static void setDefaultAptitudeForLearningWeapon(HeroesTypes type){
+        switch (type){
+            case WARRIOR -> {
+                type.defaultAptitudeForLearningWeapon.put(WeaponsTypes.MAGICAL_WEAPON, 10);
+                type.defaultAptitudeForLearningWeapon.put(WeaponsTypes.MELEE_WEAPON, 100);
+                type.defaultAptitudeForLearningWeapon.put(WeaponsTypes.RANGED_WEAPON, 30);
+                break;
+            }
+            case ARCHER -> {
+                type.defaultAptitudeForLearningWeapon.put(WeaponsTypes.MAGICAL_WEAPON, 10);
+                type.defaultAptitudeForLearningWeapon.put(WeaponsTypes.MELEE_WEAPON, 30);
+                type.defaultAptitudeForLearningWeapon.put(WeaponsTypes.RANGED_WEAPON, 100);
+                break;
+            }
+            case MAGE -> {
+                type.defaultAptitudeForLearningWeapon.put(WeaponsTypes.MAGICAL_WEAPON, 100);
+                type.defaultAptitudeForLearningWeapon.put(WeaponsTypes.MELEE_WEAPON, 30);
+                type.defaultAptitudeForLearningWeapon.put(WeaponsTypes.RANGED_WEAPON, 10);
+                break;
+            }
+            case GHOST -> {
+                type.defaultAptitudeForLearningWeapon.put(WeaponsTypes.MAGICAL_WEAPON, 500);
+                type.defaultAptitudeForLearningWeapon.put(WeaponsTypes.MELEE_WEAPON, 0);
+                type.defaultAptitudeForLearningWeapon.put(WeaponsTypes.RANGED_WEAPON, 0);
+                break;
+            }
+            default -> {
+                type.defaultAptitudeForLearningWeapon.put(WeaponsTypes.MAGICAL_WEAPON, 10);
+                type.defaultAptitudeForLearningWeapon.put(WeaponsTypes.MELEE_WEAPON, 10);
+                type.defaultAptitudeForLearningWeapon.put(WeaponsTypes.RANGED_WEAPON, 10);
+            }
+        }
+    }
 
 }

@@ -11,22 +11,21 @@ import java.util.List;
 public class TrainingGround {
     public static void main(String[] args) {
         System.out.println("Task 1:");
-        //Units.Hero adam = new Units.Hero("Adam");
         Hero adam = new Warrior("Adam");
-        adam.attackEnemy();
+        System.out.println(adam);
+        System.out.println("Training by self");
+        for(int i = 0; i < 1000; i++){
+            adam.weaponLearning(adam.getWeapon());
+        }
+        System.out.println(adam);
         printSplitter();
 
-        System.out.println("Task 2:");
-        List<Hero> heros = new ArrayList<>(
-                Arrays.asList(
-                        //new Units.Hero("Adam"),
-                        new Mage("Maggie"),
-                        new Warrior("Bersek"),
-                        new Archer("Archerudel")
-                        ));
-        for(Hero hero : heros){
-            hero.attackEnemy();
-        }
+        Hero maggi = new Mage("Maggie");
+        System.out.println(maggi);
+
+        adam.attackEnemy(maggi, 3);
+        maggi.attackEnemy(adam, 3);
+
     }
 
     public static void printSplitter(){

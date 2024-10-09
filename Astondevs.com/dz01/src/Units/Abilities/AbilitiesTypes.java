@@ -11,7 +11,7 @@ public enum AbilitiesTypes {
 
     private AbilitiesTypes(String name, int defaultValue){
         this.name = name;
-        defaultValue = defaultValue;
+        this.defaultValue = defaultValue;
     }
 
     public int getDefaultValue(){

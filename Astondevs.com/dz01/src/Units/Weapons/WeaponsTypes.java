@@ -1,9 +1,9 @@
 package Units.Weapons;
 
 public enum WeaponsTypes {
-    meleeWeapon("Оружие ближнего боя"),
-    rangedWeapon("Оружие дальнего боя"),
-    magicalWeapon("Магическое оружие");
+    MELEE_WEAPON("Оружие ближнего боя"),
+    RANGED_WEAPON("Оружие дальнего боя"),
+    MAGICAL_WEAPON("Магическое оружие");
 
     public final String typeOfWeapon;
     private WeaponsTypes(String type){

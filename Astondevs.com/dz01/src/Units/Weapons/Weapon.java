@@ -2,6 +2,7 @@ package Units.Weapons;
 
 
 import Units.Abilities.AbilitiesTypes;
+import Units.Hero;
 
 import java.util.Map;
 
@@ -32,35 +33,62 @@ public abstract class Weapon {
         return name;
     };
 
-    public float getDamage(Map<AbilitiesTypes, Integer> abilities){
+    public double getDamage(Hero hero){
         return defaultDamage
-                * getCoefficientByTypeOfWeaponAndAbilitiesOfHero(abilities) / 300
-                * getCoefficientByLevelOfWeaponsAndAbilitiesOfHero(abilities);
+                * getCoefficientByLevelOfWeaponsAndLevelOfHero(hero) /100
+                * getCoefficientByTypeOfWeaponAndAbilitiesOfHero(hero) / 100
+                * getCoefficientByLevelOfWeaponProficiency(hero) / 100;
     }
 
-    public int getCoefficientByTypeOfWeaponAndAbilitiesOfHero(Map<AbilitiesTypes, Integer> abilities){
+    public double getDamage(Hero hero, int distance){
+        double maxDamage = getDamage(hero);
+        if(distance <= distance100PercentDamage) return maxDamage;
+        if(distance > maxDistance) return 0;
+        int deltaDistanceMinusDistance100PercentDamage = distance - distance100PercentDamage;
+        int deltaMAXDistanceMinusDistance100PercentDamage = maxDistance - distance100PercentDamage;
+        return  maxDistanceDamageCoefficient
+                + (100 - maxDistanceDamageCoefficient) / deltaMAXDistanceMinusDistance100PercentDamage
+                * (deltaMAXDistanceMinusDistance100PercentDamage - deltaDistanceMinusDistance100PercentDamage);
+    }
+
+    public double getCoefficientByTypeOfWeaponAndAbilitiesOfHero(Hero hero){
+        Map<AbilitiesTypes, Integer> abilities = hero.getAbilities();
         switch (typeOfWeapon) {
-            case magicalWeapon :
-                return abilities.get(AbilitiesTypes.MAGIC) * 100
-                        +  abilities.get(AbilitiesTypes.STRENGTH) * 10
-                        +  abilities.get(AbilitiesTypes.DEXTERITY) * 50;
-            case meleeWeapon:
-                return abilities.get(AbilitiesTypes.MAGIC) * 10
-                        +  abilities.get(AbilitiesTypes.STRENGTH) * 100
-                        +  abilities.get(AbilitiesTypes.DEXTERITY) * 50;
-            case rangedWeapon:
-                return abilities.get(AbilitiesTypes.MAGIC) * 10
-                        +  abilities.get(AbilitiesTypes.STRENGTH) * 50
-                        +  abilities.get(AbilitiesTypes.DEXTERITY) * 100;
+            case MAGICAL_WEAPON:
+                return abilities.get(AbilitiesTypes.MAGIC) * 1.0
+                        +  abilities.get(AbilitiesTypes.STRENGTH) * 0.1
+                        +  abilities.get(AbilitiesTypes.DEXTERITY) * 0.5;
+            case MELEE_WEAPON:
+                return abilities.get(AbilitiesTypes.MAGIC) * 0.1
+                        +  abilities.get(AbilitiesTypes.STRENGTH) * 1.0
+                        +  abilities.get(AbilitiesTypes.DEXTERITY) * 0.5;
+            case RANGED_WEAPON:
+                return abilities.get(AbilitiesTypes.MAGIC) * 0.1
+                        +  abilities.get(AbilitiesTypes.STRENGTH) * 0.5
+                        +  abilities.get(AbilitiesTypes.DEXTERITY) * 1.0;
             default: return 30;
         }
     }
 
-    public float getCoefficientByLevelOfWeaponsAndAbilitiesOfHero(Map<AbilitiesTypes, Integer> abilities){
-        return abilities.get(AbilitiesTypes.LEVEL) / levelOfWeapons;
+    public double getCoefficientByLevelOfWeaponProficiency(Hero hero){
+        Map<WeaponsTypes, Double> levelOfProficiency = hero.getLevelOfWeaponProficiency();
+        return levelOfProficiency.get(this.typeOfWeapon);
+    }
+
+    public double getCoefficientByLevelOfWeaponsAndLevelOfHero(Hero hero){
+        Map<AbilitiesTypes, Integer> abilities = hero.getAbilities();
+        double coefficient = abilities.get(AbilitiesTypes.LEVEL) / levelOfWeapons;
+        if(coefficient > 2) {
+            coefficient = 1 + Math.log(coefficient) / Math.log(2);
+        }
+        return coefficient * 100;
     }
 
     public WeaponsTypes getWeaponsTypes(){
         return typeOfWeapon;
+    }
+
+    public String toString(){
+        return getWeaponsTypes() + ": " + getName();
     }
 }
