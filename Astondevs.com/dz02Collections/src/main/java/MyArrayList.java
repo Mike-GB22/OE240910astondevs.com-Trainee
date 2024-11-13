@@ -1,4 +1,5 @@
 //2024.09.30 zip
+
 import java.util.*;
 
 public class MyArrayList <E> implements Collection<E>, List<E> {
@@ -277,4 +278,16 @@ public class MyArrayList <E> implements Collection<E>, List<E> {
     private void checkToBoundsExceptionForInsert(int index){
         if(index > size || index < 0) throw new IndexOutOfBoundsException();
     }
+
+    @Override
+    public void sort(Comparator<? super E> comparator) {
+        new MyQuickSort().sort(listArray, size, comparator);
+    }
+
+    public void sort() {
+        if(listArray instanceof Comparable[])
+            new MyQuickSort().sort((Comparable[]) listArray, size);
+    }
+
+
 }
