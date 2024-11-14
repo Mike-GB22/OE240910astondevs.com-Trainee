@@ -1,26 +1,67 @@
 //2024.11.13
 
 import java.util.Comparator;
-
+/**
+ * Этот класс представляет собой утилитарный для организации бытсрой сортировки
+ * из моего класса MyArrayList.
+ *
+ * Методы НЕ статические!
+ *
+ * <p>Пример использования:</p>
+ * <pre>
+ *     MyQuickSort myQuickSort = new MyQuickSort();
+ *     myQuickSort.sort(arrayToSort);
+ * </pre>
+ *
+ * @version 1.0
+ */
 public class MyQuickSort {
     Comparator comparator;
 
-    //public <E extends Comparable> void sort(E[] array){
+    /**
+     * Сортировка массива.
+     *
+     * @param array - массив для сортировки, к сортировке принимается весь массив полностью
+     * @return void, манипуляция происходит над переданным массивом
+     * @throws ClassCastException если элементы не имплиментируют Comparable
+     */
     public <E> void sort(E[] array){
         sort(array, array.length);
+
     }
 
+
+    /**
+     * Сортировка массива.
+     *
+     * @param array - массив для сортировки
+     * @param size - количество элементов, от начала массива которые должны быть отсортированны
+     * @return void, манипуляция происходит над переданным массивом
+     * @throws ClassCastException если элементы не имплиментируют Comparable
+     */
     public <E> void sort(E[] array, int size){
-//        if (array instanceof Comparable<E>){
-//            throw new RuntimeException("Source array must Comparable been");
-//        }
         sort(array, (E x, E y) -> ((Comparable) x).compareTo(y));
     }
 
+    /**
+     * Сортировка массива.
+     *
+     * @param array - массив для сортировки, к сортировке принимается весь массив полностью
+     * @param comparator - переденнаый для сортировки
+     * @return void, манипуляция происходит над переданным массивом
+     */
     public <E> void sort(E[] array, Comparator<? extends E> comparator){
         sort(array, array.length, comparator);
     }
 
+    /**
+     * Сортировка массива.
+     *
+     * @param array - массив для сортировки
+     * @param size - количество элементов, от начала массива которые должны быть отсортированны
+     * @param comparator - переденнаый для сортировки
+     * @return void, манипуляция происходит над переданным массивом
+     */
     public <E> void sort(E[] array, int size, Comparator<? extends E> comparator){
         if(array.length < 2) return;
         this.comparator = comparator;
