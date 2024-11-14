@@ -1,17 +1,20 @@
 //2024.11.13
 
-import java.util.Arrays;
 import java.util.Comparator;
 
 public class MyQuickSort {
     Comparator comparator;
 
-    public <E extends Comparable> void sort(E[] array){
+    //public <E extends Comparable> void sort(E[] array){
+    public <E> void sort(E[] array){
         sort(array, array.length);
     }
 
-    public <E extends Comparable> void sort(E[] array, int size){
-        sort(array, (E x, E y) -> x.compareTo(y));
+    public <E> void sort(E[] array, int size){
+//        if (array instanceof Comparable<E>){
+//            throw new RuntimeException("Source array must Comparable been");
+//        }
+        sort(array, (E x, E y) -> ((Comparable) x).compareTo(y));
     }
 
     public <E> void sort(E[] array, Comparator<? extends E> comparator){
