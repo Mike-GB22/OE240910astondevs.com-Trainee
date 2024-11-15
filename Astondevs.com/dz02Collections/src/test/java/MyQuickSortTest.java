@@ -98,8 +98,8 @@ class MyQuickSortTest {
             ; numberOfTestOfThisKindOfGeneration < COUNT_OF_EVERY_TEST
                 ; numberOfTestOfThisKindOfGeneration++){
             
-            List<Object> arrayToSort = new ArrayList<>(COUNT_OF_EVERY_TEST);
-            List<Object> arrayExpected = new ArrayList<>(COUNT_OF_EVERY_TEST);
+            List<Object> arrayToSort = new ArrayList<>(COUNT_OF_ELEMENTS_OF_ARRAY);
+            List<Object> arrayExpected = new ArrayList<>(COUNT_OF_ELEMENTS_OF_ARRAY);
 
             fillingTwoListsWithIdenticalElements
                     (arrayToSort, arrayExpected, numberOfTestOfThisKindOfGeneration, typeOfGeneration);
